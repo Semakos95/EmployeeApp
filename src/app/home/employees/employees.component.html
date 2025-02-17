@@ -1,0 +1,47 @@
+
+<div class="modalContainer" *ngIf="!!employeeObject">
+    <div class="modalHeader col-12 d-flex">
+        <div class="modalTitle col-11">Add New Employee</div>
+        <button class="exitBtn col-1" (click)="onPressX($event)">X</button>
+    </div>
+    <div class="dialog d-flex col-12">
+        <div class="content col-lg-6 col-12">
+            <div class="modal-body p-0">
+                <app-form [employeeObj]="employeeObject" (closeModal)="closeEmployeeModal()"></app-form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="employeeContainer">
+    <div class="empCard">
+        <div class="cardHeader">
+            <div class="cardTitle">List of all Employees</div>
+            <!-- <button>X</button> -->
+        </div>
+        <div class="cardBody">
+            <div class="cardItem" *ngFor="let emp of employees">
+                <div class="infoHolder">
+                    <div class="name">
+                        Name: {{emp.firstName}}
+                    </div>
+                    <div class="lastname">
+                        Lastname: {{emp.lastName}}
+                    </div>
+                    <div class="dateOfBirth">
+                        Date of birth: {{emp.dateOfBirth}}
+                    </div>
+                </div>
+                <button (click)="onEditEmp(emp)">Edit</button>
+                <button (click)="onDeleteEmp(emp)">Delete</button>
+
+
+                  
+            </div>
+        </div>
+        <div class="cardFooter">
+            <button (click)="onAddEmp()">Add New Emp</button>
+        </div>
+    </div>
+</div>
+

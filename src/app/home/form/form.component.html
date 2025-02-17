@@ -1,0 +1,121 @@
+
+<div class="form-container">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmitEmployee()" *ngIf="!!employeeObj">
+        <div class="employeeInfo">
+            <div class="personalInfo">
+                <div class="item">
+                    <label>First Name: <span *ngIf="getControl('firstName')?.errors?.['minlength']">Minimum 3 characters required</span></label>
+                    <input type="text" formControlName="firstName" />
+                    <div *ngIf="getControl('firstName')?.invalid && getControl('firstName')?.touched"></div>
+                </div>
+            
+                <div class="item">
+                    <label>Last Name: <span *ngIf="getControl('lastName')?.errors?.['required']">is required</span></label> 
+                    <input type="text" formControlName="lastName" />
+                    <div *ngIf="getControl('lastName')?.invalid && getControl('lastName')?.touched">
+                    </div>
+                </div>
+            
+            
+                <div class="item">
+                    <label>Date Of Birth: 
+                        <span *ngIf="getControl('dateOfBirth')?.errors?.['required']">is required</span>
+                    </label>
+                    <input type="text" formControlName="dateOfBirth" />
+                    <div *ngIf="getControl('dateOfBirth')?.invalid && getControl('dateOfBirth')?.touched">
+                    </div>
+                </div>
+            
+
+                <div class="item">
+                    <label>Attributes:</label>
+                    <div class="atrHolder d-flex flex-wrap">
+                        <div class="atrItem"*ngFor="let attr of attributeOptions">
+                            <label>
+                              <input
+                                type="checkbox"
+                                [value]="attr.id"
+                                (change)="onCheckboxChange($event)"
+                                [checked]="employeeForm.get('attributeID')?.value.includes(attr.id)"
+                              />
+                              {{ attr.name }}
+                            </label>
+                          </div>
+                    </div>
+                  </div>
+
+                
+                <div class="vehicle">
+                    <label>Owns Vehicle:</label>
+                    <input type="checkbox" formControlName="ownsVehicle" />
+                </div>
+        
+            </div>
+            <div class="addressInfo" formGroupName="homeAddress">
+                <div class="item">
+                <!-- street info -->
+                    <label>Street : 
+                        <span *ngIf="getControl('street')?.errors?.['required']">is required</span>
+                    </label>
+                    <input type="text" formControlName="street" />
+                    <div *ngIf="getControl('street')?.invalid && getControl('street')?.touched">
+                    </div>
+                </div>
+    
+                <div class="item">
+                    <!-- city info -->
+                    <label>City : 
+                        <span *ngIf="getControl('city')?.errors?.['required']">is required</span>
+                    </label>
+                    <input type="text" formControlName="city" />
+                    <div *ngIf="getControl('city')?.invalid && getControl('city')?.touched">
+                    </div>
+                </div>
+    
+                <div class="item">
+                    <!-- country info -->
+                    <label>Country : 
+                        <span *ngIf="getControl('country')?.errors?.['required']">is required</span>
+                    </label>
+                    <input type="text" formControlName="country" />
+                    <div *ngIf="getControl('country')?.invalid && getControl('country')?.touched">
+                    </div>
+                </div>
+                <div class="coordinates" formGroupName="coordinates">
+                    <div class="item">
+                        <!-- lat info -->
+                        <label>Enter lat : 
+                            <span *ngIf="getControl('lat')?.errors?.['required']">is required</span>
+                        </label>
+                        <input type="text" formControlName="lat" />
+                        <div *ngIf="getControl('lat')?.invalid && getControl('lat')?.touched">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <!-- lat info -->
+                        <label>Enter long : 
+                            <span *ngIf="getControl('lng')?.errors?.['required']">is required</span>
+                        </label>
+                        <input type="text" formControlName="lng" />
+                        <div *ngIf="getControl('lng')?.invalid && getControl('lng')?.touched">
+                        </div>
+                    </div>  
+                </div>
+
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="employeeForm.invalid">Submit</button>
+    </form>
+
+    <form [formGroup]="attributeForm" (ngSubmit)="onSubmitAttribute()" *ngIf="!!attrObj">
+        
+        <div class="item">
+            <label>Attribute: <span *ngIf="getAttributeControl('attribute')?.errors?.['required']">is required</span></label> 
+            <input type="text" formControlName="attribute" />
+            <div *ngIf="getAttributeControl('attribute')?.invalid && getAttributeControl('attribute')?.touched"></div>
+        </div>
+        <button type="submit" [disabled]="attributeForm.invalid">Submit</button>
+    </form>
+</div>
+

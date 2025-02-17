@@ -1,0 +1,46 @@
+<div class="modalContainer" *ngIf="!!attrObject">
+    <div class="modalHeader col-12 d-flex">
+        <div class="modalTitle col-11">Add New Attribute</div>
+        <button class="exitBtn col-1" (click)="onPressX($event)">X</button>
+    </div>
+    <div class="dialog d-flex col-12">
+        <div class="content col-lg-6 col-12">
+            <div class="modal-body p-0">
+                <app-form [attrObj]="attrObject" (closeModal)="closeAttrModal()"></app-form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="attrContainer">
+    <div class="attrCard">
+        <div class="cardHeader">
+            <div class="cardTitle">List of Attributes</div>
+            <!-- <button>X</button> -->
+        </div>
+        <div class="cardBody">
+            <div class="cardItem" *ngFor="let attr of attributes">
+                <div class="infoHolder">
+                    <div class="name">
+                        Attribute: {{attr.name}}
+                    </div>
+                    <!-- <div class="lastname">
+                        Lastname: {{attr.lastName}}
+                    </div>
+                    <div class="dateOfBirth">
+                        Date of birth: {{attr.dateOfBirth}}
+                    </div> -->
+                </div>
+                <button (click)="onEditAttr(attr)">Edit</button>
+                <button (click)="onDeleteAttr(attr)">Delete</button>
+
+
+                  
+            </div>
+        </div>
+        <div class="cardFooter">
+            <button (click)="onAddAttr()">Add New Attribute</button>
+        </div>
+    </div>
+</div>

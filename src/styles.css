@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+/* body{
+    background-color: blue;
+} */
+app-home{
+    /* background: blueviolet; */
+    /* position: absolute; */
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

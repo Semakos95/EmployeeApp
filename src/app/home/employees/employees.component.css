@@ -1,0 +1,130 @@
+.modalContainer{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 35%;
+    height: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    place-self: center;
+    /* background-color: blue; */
+    z-index: 1;
+    border-radius: 10px;
+    transition: 1.5s;
+    box-shadow: 0px 1px 19px 5px;
+    .modalHeader{
+        height: 7%;
+        .modalTitle{
+            text-align: center;
+            background-color: #9cbfeb;
+            border-radius: 10px 0px 0px 0px;
+        }
+        .exitBtn{
+            border-radius: 0px 10px 0px 0px;
+            border: 0px;
+            transition: 0.5s;
+        }
+        .exitBtn:hover{
+            background-color: red;
+        }
+    }
+    .dialog{
+        height: 93%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        background-color: rgb(243 223 223);
+        border-radius: 0px 0px 10px 10px;
+        .content{
+            width: 100%;
+            .modal-body{
+                height: 100%;
+            }
+        }
+    }    
+}
+
+.employeeContainer{
+    height: 100%;
+    background: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .empCard{
+        box-shadow: 4px 7px 28px 14px;
+        display: flex;
+        flex-direction: column;
+        background-color: #abab63;
+        width: 70%;
+        height: 50%;
+        justify-self: end;
+        border-radius: 10px;
+        .cardHeader{
+            height: 15%;
+            display: flex;
+            .cardTitle{
+                width: 90%;
+                text-align: center;
+                align-self: center;
+                font-size: 24px;
+                padding-left: 10%;
+            }
+            button{
+                height: 50%;
+                width: 10%;
+                border: 0px;
+                border-radius: 0px 10px 0px 0px;
+            }
+        }
+        .cardBody{
+            height: 70%;
+            background-color: #ffffff;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+
+
+            .cardItem{
+                display: flex;
+                justify-content: center;
+                gap: 17px;
+                border-bottom: 2px solid black;
+                .infoHolder{
+                    width: 60%;
+                    padding-left: 37px;
+                }
+                button{
+                    /* width: 10%; */
+                    border: 0px;
+                    border-radius: 5px;
+                    height: 50%;
+                    align-self: center;
+                }
+            }
+        }
+        .cardFooter{
+            height: 15%;
+            display: flex;
+            justify-content: end;
+            padding-right: 33px;
+            button{
+                border: 0px;
+                border-radius: 5px;
+                height: 50%;
+                align-self: center;
+            
+            }
+        }
+    }
+}
+
+
