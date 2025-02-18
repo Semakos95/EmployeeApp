@@ -20,13 +20,11 @@ export class EmployeesComponent {
   
   employeeObject:any = null; 
 
-  constructor(private employeeService:EmployeeService, private dialog: MatDialog){
-
-  }
+  constructor(private employeeService: EmployeeService, private dialog: MatDialog){  }
 
   ngOnInit(){
-    this.employeeSubscription = this.employeeService.employeesContainer.subscribe(data=>{
-      this.employees=data;
+    this.employeeSubscription = this.employeeService.getAllEmployees().subscribe(data => {
+      this.employees = data;
     })
   }
 

@@ -20,10 +20,8 @@ export class FormComponent {
   employeeForm!: FormGroup;
   attributeForm: FormGroup;
   attributeOptions:any;
-
-
   
-  constructor(private fb: FormBuilder, private empService: EmployeeService, private atrService:AttributeService){
+  constructor(private fb: FormBuilder, private empService: EmployeeService, private atrService: AttributeService){
     this.employeeForm = this.fb.group({
       id:[null],
       firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -48,14 +46,13 @@ export class FormComponent {
     });
 
     this.loadAttributeOptions();
-    console.log('ta attributesss',this.attributeOptions)
 
     this.employeeForm.get('homeAddress')?.valueChanges.subscribe(() => {
       this.autoFillCoordinates();
     });
 
-    //this.onSubmitAttribute()
   }
+
   //fetch data choosen employee/attribute to the form 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['employeeObj'] && this.employeeObj) {
@@ -65,16 +62,6 @@ export class FormComponent {
     }
   }
 
-  ngOnInit(){
-
-
-  }
-  ngAfterViewInit(){
-
-  }
-  ngOnDestroy(){
-    //alert('pame')
-  }
 
   getControl(controlName: string) {
     return this.employeeForm.get(controlName);
@@ -87,44 +74,29 @@ export class FormComponent {
 
   onCheckboxChange(event: any) {
     const attributeControl = this.employeeForm.get('attributeID');
-    // Make sure we are working with numbers (assuming attribute.id is a number)
     const value = parseInt(event.target.value, 10);
     let selectedAttributes: number[] = attributeControl?.value || [];
 
     if (event.target.checked) {
-      // Add the attribute ID if not already included
       if (!selectedAttributes.includes(value)) {
         selectedAttributes.push(value);
       }
     } else {
-      // Remove the attribute ID
       selectedAttributes = selectedAttributes.filter(val => val !== value);
     }
     attributeControl?.setValue(selectedAttributes);
   }
 
+
   onSubmitEmployee() {
-    let storedEmployees: Employee[] = JSON.parse(localStorage.getItem('employeesArray') || '[]');
-
     if (this.employeeForm.valid) {
-      let formData = this.employeeForm.value; 
+      const formData = this.employeeForm.value; 
       if (formData.id) {
-
-        let index = storedEmployees.findIndex(emp => emp.id === formData.id);
-        if (index !== -1) {
-          storedEmployees[index] = { ...storedEmployees[index], ...formData };
-        }
+        this.empService.updateEmployee(formData);
       } else {
-        // Add mode: generate a new ID and add the employee
-        let newId = storedEmployees.length > 0 ? Math.max(...storedEmployees.map(emp => emp.id || 0)) + 1 : 1;
-        formData.id = newId;
-        storedEmployees.push(formData);
+        this.empService.addEmployee(formData);
       }
-      console.log('AFTER',storedEmployees)
-      localStorage.setItem('employeesArray', JSON.stringify(storedEmployees));
-      this.empService._employeesContainer.next(storedEmployees)
       this.closeModal.emit(true);
-
     } else {
       console.log("Form is invalid");
     }
@@ -132,25 +104,13 @@ export class FormComponent {
 
 
   onSubmitAttribute(){
-    let storedAttributes: Attribute[] = JSON.parse(localStorage.getItem('attributesArray') || '[]');
     if (this.attributeForm.valid) {
-      let formData = this.attributeForm.value;
-      console.log('FORMDATA',formData)
+      const formData = this.attributeForm.value;
       if (formData.id) {
-        //update
-        let index = storedAttributes.findIndex((attr: any) => attr.id === formData.id);
-        console.log('index',index)
-        if (index !== -1) {
-          storedAttributes[index].name = formData.attribute;
-        }
+        this.atrService.updateAttribute(formData);
       } else {
-        //create
-        let newId = storedAttributes.length ? Math.max(...storedAttributes.map((attr: any) => attr.id || 0)) + 1 : 1;
-        storedAttributes.push({ id: newId, name: formData.attribute });
+        this.atrService.addAttribute(formData);
       }
-      localStorage.setItem('attributesArray', JSON.stringify(storedAttributes));
-      //edw
-      this.atrService._attributeContainer.next(storedAttributes);
       this.closeModal.emit(true);
     } else {
       console.log("Form is invalid!");
@@ -162,10 +122,9 @@ export class FormComponent {
   }
 
   loadAttributeOptions() {
-    let storedAttributes = localStorage.getItem('attributesArray');
-    if (storedAttributes) {
-      this.attributeOptions = JSON.parse(storedAttributes);
-    }
+    this.atrService.getAllAttributes().subscribe(data => {
+      this.attributeOptions = data;
+    })
   }
 
   autoFillCoordinates(){

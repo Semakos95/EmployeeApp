@@ -6,6 +6,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormComponent } from '../form/form.component';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Attribute } from '../../models/models';
 
 @Component({
   selector: 'app-attributes',
@@ -15,7 +16,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   styleUrl: './attributes.component.css'
 })
 export class AttributesComponent {
-  attributes:any[] = []
+  attributes:Attribute[] = []
 
   attrObject:any = null;
 
@@ -29,12 +30,12 @@ export class AttributesComponent {
     })
   }
 
-  onEditAttr(attr:any){
-    this.attrObject = attr
+  onEditAttr(attr: Attribute){
+    this.attrObject = attr;
   }
 
-  onDeleteAttr(attr:any){
-    let dialogRef = this.dialog.open(DialogComponent);
+  onDeleteAttr(attr: Attribute){
+    const dialogRef = this.dialog.open(DialogComponent);
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.atrService.deleteAttribute(attr);
@@ -48,7 +49,7 @@ export class AttributesComponent {
     this.attrObject = true;
   }
 
-  onPressX(e:MouseEvent){
+  onPressX(e: MouseEvent){
     this.attrObject = null;
   }
 
