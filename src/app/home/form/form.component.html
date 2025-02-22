@@ -32,7 +32,7 @@
                     <div class="atrHolder d-flex flex-wrap">
                         <div class="atrItem"*ngFor="let attr of attributeOptions">
                             <label>
-                              <input
+                              <input class="checkbox"
                                 type="checkbox"
                                 [value]="attr.id"
                                 (change)="onCheckboxChange($event)"
@@ -47,7 +47,7 @@
                 
                 <div class="vehicle">
                     <label>Owns Vehicle:</label>
-                    <input type="checkbox" formControlName="ownsVehicle" />
+                    <input class="checkbox" type="checkbox" formControlName="ownsVehicle" />
                 </div>
         
             </div>
@@ -111,9 +111,9 @@
     <form [formGroup]="attributeForm" (ngSubmit)="onSubmitAttribute()" *ngIf="!!attrObj">
         
         <div class="item">
-            <label>Attribute: <span *ngIf="getAttributeControl('attribute')?.errors?.['required']">is required</span></label> 
-            <input type="text" formControlName="attribute" />
-            <div *ngIf="getAttributeControl('attribute')?.invalid && getAttributeControl('attribute')?.touched"></div>
+            <label>Attribute: <span *ngIf="getAttributeControl('name')?.errors?.['required']">is required</span></label> 
+            <input type="text" formControlName="name" />
+            <div *ngIf="getAttributeControl('name')?.invalid && getAttributeControl('name')?.touched"></div>
         </div>
         <button type="submit" [disabled]="attributeForm.invalid">Submit</button>
     </form>

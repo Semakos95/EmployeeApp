@@ -42,7 +42,7 @@ export class FormComponent {
 
     this.attributeForm = this.fb.group({
       id:[''],
-      attribute: ['', [Validators.required, Validators.minLength(2)]]
+      name: ['', [Validators.required, Validators.minLength(2)]]
     });
 
     this.loadAttributeOptions();
@@ -106,6 +106,7 @@ export class FormComponent {
   onSubmitAttribute(){
     if (this.attributeForm.valid) {
       const formData = this.attributeForm.value;
+      console.log('formData',formData)
       if (formData.id) {
         this.atrService.updateAttribute(formData);
       } else {

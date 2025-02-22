@@ -16,6 +16,6 @@ export interface Address {
 }
 
 export interface Attribute {
-    id: number;
+    id?: number;
     name: string;
 }

@@ -17,20 +17,22 @@ export class AttributeService {
     }
 
     //function to add new attribute
-    addAttribute(form:any): void {
+    addAttribute(form: Attribute): void {
+        console.log('FORM: ',form)
         const storedAttributes: Attribute[] = JSON.parse(localStorage.getItem('attributesArray') || '[]');
         const newId = storedAttributes.length ? Math.max(...storedAttributes.map(attr => attr.id || 0)) + 1 : 1;
-        storedAttributes.push({ id: newId, name: form.attribute });
+        storedAttributes.push({ id: newId, name: form.name });
         this._attributeContainer.next(storedAttributes);
         localStorage.setItem('attributesArray', JSON.stringify(storedAttributes));
     }
     
     //function to update an attribute
-    updateAttribute(form:any): void {
+    updateAttribute(form: Attribute): void {
         let storedAttributes: Attribute[] = JSON.parse(localStorage.getItem('attributesArray') || '[]');
         const index = storedAttributes.findIndex(attr => attr.id === form.id);
         if (index !== -1) {
-            storedAttributes[index].name = form.attribute;
+            console.log('FORM: ',form)
+            storedAttributes[index].name = form.name;
             this._attributeContainer.next(storedAttributes);
             localStorage.setItem('attributesArray', JSON.stringify(storedAttributes));
         } else {

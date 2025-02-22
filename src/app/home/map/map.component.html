@@ -1,8 +1,22 @@
-<p>map works!</p>
-<div class="col-12 d-flex justify-content-center">
-    <div #mapContainer id="map" style="width: 20%; height: 400px;"></div>
-    <!-- <google-map [center]="center"></google-map> -->
-    <!-- <div #mapContainer id="map" style="width: 100%; height: 500px;"></div> -->
+
+<div class="col-12 d-flex justify-content-center flex-column h-100 align-content-center flex-wrap">
+    <div class="holder">
+      <div class="mapContainer">
+        <div #mapContainer class="map" id="map" ></div>
+      </div>
+      
+      <div class="listContainer">
+        <label for="searchInput">Enter a character:</label>
+        <input id="searchInput" type="text" [(ngModel)]="searchChar"  placeholder="Find by attribute">
+        <ul *ngIf="searchChar!=''">
+          <li *ngFor="let emp of filteredNames" (click)="onSelect($event,emp)">{{ emp.firstName }} , {{ emp.lastName }}</li>
+        </ul>
+      </div>
+    </div>
+
+
 </div>
+
+
 
 

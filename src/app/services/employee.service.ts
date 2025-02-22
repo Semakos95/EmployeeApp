@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Employee } from "../models/models";
+import { Attribute, Employee } from "../models/models";
 import { BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
@@ -14,6 +14,37 @@ export class EmployeeService {
     getAllEmployees(): Observable<Employee[]> {
       return this.employeesContainer;
     }
+
+  //filter employees based on the provided search string
+  filterEmployeesByAttribute(searchChar: string): Employee[] {
+    const employees: Employee[] = JSON.parse(localStorage.getItem('employeesArray') || '[]');
+    const attributes: Attribute[] = JSON.parse(localStorage.getItem('attributesArray') || '[]');
+
+    //return all employees if no search term is provided
+    if (!searchChar) {
+      return employees;
+    }
+
+    const searchLower = searchChar.toLowerCase();
+    const matchedAttributes = attributes.filter(attr =>
+      attr.name.toLowerCase().includes(searchLower)
+    );
+
+    if (matchedAttributes.length === 0) {
+      return [];
+    }
+
+    const matchedIDs = matchedAttributes.map(attr => attr.id);
+
+    //filter employees that have an attributeID matching one of the matched attributes
+    return employees.filter(emp => {
+      if (!emp.attributeID) return false;
+      if (Array.isArray(emp.attributeID)) {
+        return emp.attributeID.some((id: number) => matchedIDs.includes(id));
+      }
+      return matchedIDs.includes(emp.attributeID);
+    });
+  }
 
     //function to create an employee
     addEmployee(employee: Employee): void {
