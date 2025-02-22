@@ -1,0 +1,60 @@
+.gif{
+    position: absolute;
+    left: 30%;
+    top: 3%;
+    animation: focus-in-contract-bck 9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    img{
+        width: 35%;
+        border-radius: 30px;
+    }
+}
+.welcomeMsgContainer{
+    /* background-color: rgb(201, 192, 209); */
+    position: absolute;
+    padding-top: 20px;
+    font-family: cursive;
+    text-align: center;
+    animation: focus-in-contract-bck 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    .title{
+        font-size: 30px;
+    }
+    .content{
+        font-size: 19px;
+    }
+}
+
+ @-webkit-keyframes focus-in-contract-bck {
+    0% {
+      letter-spacing: 1em;
+      -webkit-transform: translateZ(300px);
+              transform: translateZ(300px);
+      -webkit-filter: blur(12px);
+              filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateZ(12px);
+              transform: translateZ(12px);
+      -webkit-filter: blur(0);
+              filter: blur(0);
+      opacity: 1;
+    }
+  }
+  @keyframes focus-in-contract-bck {
+    0% {
+      letter-spacing: 1em;
+      -webkit-transform: translateZ(300px);
+              transform: translateZ(300px);
+      -webkit-filter: blur(12px);
+              filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateZ(12px);
+              transform: translateZ(12px);
+      -webkit-filter: blur(0);
+              filter: blur(0);
+      opacity: 1;
+    }
+  }
+  

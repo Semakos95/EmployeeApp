@@ -66,15 +66,16 @@ export class MapComponent{
   addEmployeeMarkers() {
     let selected = true
     let storedEmployees = this.employeeList;
-    let georgeLocation: google.maps.LatLng | null = null; 
     let empLocation: google.maps.LatLng[] = []; 
 
     storedEmployees.forEach((employee: any) => {
       if (employee.homeAddress && employee.homeAddress.coordinates) {
         const { lat, lng } = employee.homeAddress.coordinates;
+        console.log('LAT',lat)
+        console.log('lng',lng)
         let iconUrl = "http://maps.google.com/mapfiles/ms/icons/red-dot.png"; 
         empLocation.push(new google.maps.LatLng(lat, lng)); 
-        
+        console.log('empLocation',empLocation)
         new google.maps.Marker({
           position: { lat, lng },
           map: this.map,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AttributeService } from '../../services/attribute.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +17,7 @@ import { Attribute } from '../../models/models';
 })
 export class AttributesComponent {
   attributes:Attribute[] = []
-
+  @ViewChild('modalContainer') modalContainer!: ElementRef;
   attrObject:any = null;
 
   constructor(private atrService: AttributeService,private dialog: MatDialog){
@@ -35,7 +35,15 @@ export class AttributesComponent {
   }
 
   onDeleteAttr(attr: Attribute){
-    const dialogRef = this.dialog.open(DialogComponent);
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Confirmation',
+        message: 'Are you sure you want to delete that attribute?',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        singleButton: false
+      }
+    });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.atrService.deleteAttribute(attr);

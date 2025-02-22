@@ -13,13 +13,16 @@ import { MapComponent } from './map/map.component';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+  showGif = true;
 
   constructor(){
 
   }
 
   ngOnInit(){
+    setTimeout(()=>{
+      this.showGif = true;
+    },10000)
     //alert('IRTHAME')
   }
 }

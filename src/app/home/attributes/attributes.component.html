@@ -1,4 +1,4 @@
-<div class="modalContainer" *ngIf="!!attrObject">
+<div class="modalContainer" #modalContainer *ngIf="!!attrObject">
     <div class="modalHeader col-12 d-flex">
         <div class="modalTitle col-11">Add New Attribute</div>
         <button class="exitBtn col-1" (click)="onPressX($event)">X</button>

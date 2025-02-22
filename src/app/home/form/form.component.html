@@ -4,31 +4,27 @@
         <div class="employeeInfo">
             <div class="personalInfo">
                 <div class="item">
-                    <label>First Name: <span *ngIf="getControl('firstName')?.errors?.['minlength']">Minimum 3 characters required</span></label>
+                    <label>First Name: <span *ngIf="getControl('firstName')?.errors?.['required']" style="color:red">is required</span></label>
                     <input type="text" formControlName="firstName" />
-                    <div *ngIf="getControl('firstName')?.invalid && getControl('firstName')?.touched"></div>
+                    <!-- <div *ngIf="getControl('firstName')?.invalid && getControl('firstName')?.touched"></div> -->
                 </div>
             
                 <div class="item">
-                    <label>Last Name: <span *ngIf="getControl('lastName')?.errors?.['required']">is required</span></label> 
+                    <label>Last Name: <span *ngIf="getControl('lastName')?.errors?.['required']" style="color:red">is required</span></label> 
                     <input type="text" formControlName="lastName" />
-                    <div *ngIf="getControl('lastName')?.invalid && getControl('lastName')?.touched">
-                    </div>
                 </div>
             
             
                 <div class="item">
                     <label>Date Of Birth: 
-                        <span *ngIf="getControl('dateOfBirth')?.errors?.['required']">is required</span>
+                        <span *ngIf="getControl('dateOfBirth')?.errors?.['required']" style="color:red">is required</span>
                     </label>
                     <input type="text" formControlName="dateOfBirth" />
-                    <div *ngIf="getControl('dateOfBirth')?.invalid && getControl('dateOfBirth')?.touched">
-                    </div>
                 </div>
             
 
-                <div class="item">
-                    <label>Attributes:</label>
+                <div class="item" >
+                    <label>Attributes: <span *ngIf="getControl('attributeID')?.errors?.['required']" style="color:red">are required</span></label>
                     <div class="atrHolder d-flex flex-wrap">
                         <div class="atrItem"*ngFor="let attr of attributeOptions">
                             <label>
@@ -55,67 +51,56 @@
                 <div class="item">
                 <!-- street info -->
                     <label>Street : 
-                        <span *ngIf="getControl('street')?.errors?.['required']">is required</span>
+                        <span *ngIf="getControl('homeAddress.street')?.errors?.['required']" style="color:red">is required</span>
                     </label>
                     <input type="text" formControlName="street" />
-                    <div *ngIf="getControl('street')?.invalid && getControl('street')?.touched">
-                    </div>
                 </div>
     
                 <div class="item">
                     <!-- city info -->
                     <label>City : 
-                        <span *ngIf="getControl('city')?.errors?.['required']">is required</span>
+                        <span *ngIf="getControl('homeAddress.city')?.errors?.['required']" style="color:red">is required</span>
                     </label>
                     <input type="text" formControlName="city" />
-                    <div *ngIf="getControl('city')?.invalid && getControl('city')?.touched">
-                    </div>
                 </div>
     
                 <div class="item">
                     <!-- country info -->
                     <label>Country : 
-                        <span *ngIf="getControl('country')?.errors?.['required']">is required</span>
+                        <span *ngIf="getControl('homeAddress.country')?.errors?.['required']" style="color:red">is required</span>
                     </label>
                     <input type="text" formControlName="country" />
-                    <div *ngIf="getControl('country')?.invalid && getControl('country')?.touched">
-                    </div>
                 </div>
                 <div class="coordinates" formGroupName="coordinates">
                     <div class="item">
                         <!-- lat info -->
                         <label>Enter lat : 
-                            <span *ngIf="getControl('lat')?.errors?.['required']">is required</span>
+                            <span *ngIf="getControl('homeAddress.coordinates.lat')?.errors?.['required']" style="color:red">is required</span>
                         </label>
-                        <input type="text" formControlName="lat" />
-                        <div *ngIf="getControl('lat')?.invalid && getControl('lat')?.touched">
-                        </div>
+                        <input type="number" formControlName="lat" />
                     </div>
                     <div class="item">
-                        <!-- lat info -->
+                        <!-- long info -->
                         <label>Enter long : 
-                            <span *ngIf="getControl('lng')?.errors?.['required']">is required</span>
+                            <span *ngIf="getControl('homeAddress.coordinates.lng')?.errors?.['required']" style="color:red">is required</span>
                         </label>
-                        <input type="text" formControlName="lng" />
-                        <div *ngIf="getControl('lng')?.invalid && getControl('lng')?.touched">
-                        </div>
+                        <input type="number" formControlName="lng" />
                     </div>  
                 </div>
 
             </div>
         </div>
 
-        <button type="submit" [disabled]="employeeForm.invalid">Submit</button>
+        <button type="submit" [disabled]="employeeForm.invalid" [ngStyle]="{'background-color': employeeForm.invalid ? '#ff000063' : '#35cb35'}">Submit</button>
     </form>
 
     <form [formGroup]="attributeForm" (ngSubmit)="onSubmitAttribute()" *ngIf="!!attrObj">
         
         <div class="item">
-            <label>Attribute: <span *ngIf="getAttributeControl('name')?.errors?.['required']">is required</span></label> 
+            <label>Attribute: <span *ngIf="getAttributeControl('name')?.errors?.['required']" style="color:red">is required</span></label> 
             <input type="text" formControlName="name" />
-            <div *ngIf="getAttributeControl('name')?.invalid && getAttributeControl('name')?.touched"></div>
         </div>
-        <button type="submit" [disabled]="attributeForm.invalid">Submit</button>
+        <button type="submit" [disabled]="attributeForm.invalid" [ngStyle]="{'background-color': attributeForm.invalid ? '#ff000063' : '#35cb35'}">Submit</button>
     </form>
 </div>
 

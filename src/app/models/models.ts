@@ -19,3 +19,11 @@ export interface Attribute {
     id?: number;
     name: string;
 }
+
+export interface DialogData {
+    title?: string;           
+    message: string;          
+    confirmButtonText?: string;
+    cancelButtonText?: string;
+    singleButton?: boolean;
+  }

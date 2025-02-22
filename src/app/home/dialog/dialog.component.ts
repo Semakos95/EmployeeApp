@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { DialogData } from '../../models/models';
 
 @Component({
   selector: 'app-dialog',
@@ -11,12 +12,16 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
   styleUrl: './dialog.component.css'
 })
 export class DialogComponent {
-  constructor(public dialogRef: MatDialogRef<DialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {
     this.dialogRef.close(false);
   }
   onYesClick(): void {
+    this.dialogRef.close(true);
+  }
+
+  onOkClick(): void {
     this.dialogRef.close(true);
   }
 }

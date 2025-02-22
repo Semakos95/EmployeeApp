@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { EmployeeService } from '../../services/employee.service';
 import { Attribute, Employee } from '../../models/models';
 import { AttributeService } from '../../services/attribute.service';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-form',
@@ -14,14 +16,15 @@ import { AttributeService } from '../../services/attribute.service';
 })
 export class FormComponent {
   @Output() closeModal = new EventEmitter<boolean>();
-  @Input() employeeObj:any ;
+  @Input() employeeObj:any;
   @Input() attrObj:any;
 
   employeeForm!: FormGroup;
+  employees: Employee[] = []; 
   attributeForm: FormGroup;
   attributeOptions:any;
-  
-  constructor(private fb: FormBuilder, private empService: EmployeeService, private atrService: AttributeService){
+
+  constructor(private fb: FormBuilder, private empService: EmployeeService, private atrService: AttributeService,private dialog: MatDialog){
     this.employeeForm = this.fb.group({
       id:[null],
       firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -33,8 +36,8 @@ export class FormComponent {
         city: ['', Validators.required],
         country: ['', Validators.required],
         coordinates: this.fb.group({
-          lat: ['', [Validators.required, Validators.pattern("^-?\\d+(\\.\\d+)?$")]], // Ensures it's a number
-          lng: ['', [Validators.required, Validators.pattern("^-?\\d+(\\.\\d+)?$")]]
+          lat: ['', [Validators.required]], //, Validators.pattern("^-?\\d+(\\.\\d+)?$")// Ensures it's a number
+          lng: ['', [Validators.required]] //, Validators.pattern("^-?\\d+(\\.\\d+)?$")
         })
       }),
       ownsVehicle: [false, Validators.required]
@@ -46,9 +49,10 @@ export class FormComponent {
     });
 
     this.loadAttributeOptions();
+    this.loadEmployees();
 
     this.employeeForm.get('homeAddress')?.valueChanges.subscribe(() => {
-      this.autoFillCoordinates();
+      //this.autoFillCoordinates();
     });
 
   }
@@ -91,6 +95,19 @@ export class FormComponent {
   onSubmitEmployee() {
     if (this.employeeForm.valid) {
       const formData = this.employeeForm.value; 
+      const existingName = this.employees.find((attr:any) => attr.firstName.toLowerCase() == formData.firstName.toLowerCase())
+      const existingLastName = this.employees.find((attr:any) => attr.lastName.toLowerCase() == formData.lastName.toLowerCase())
+      if(existingName && existingLastName){
+        this.dialog.open(DialogComponent, {
+          data: {
+            title: 'Warning!',
+            message: `Employee "${existingName.firstName} ${existingLastName.lastName}" already exists! Please create another one`,
+            confirmButtonText: 'OK',
+            singleButton: true
+          }
+        });
+        return;
+      }
       if (formData.id) {
         this.empService.updateEmployee(formData);
       } else {
@@ -106,7 +123,18 @@ export class FormComponent {
   onSubmitAttribute(){
     if (this.attributeForm.valid) {
       const formData = this.attributeForm.value;
-      console.log('formData',formData)
+      const existingAttr = this.attributeOptions.find((attr:any) => attr.name.toLowerCase() == formData.name.toLowerCase())
+      if(existingAttr){
+        this.dialog.open(DialogComponent, {
+          data: {
+            title: 'Warning!',
+            message: 'This attribute already exists! Please create another one',
+            confirmButtonText: 'OK',
+            singleButton: true
+          }
+        });
+        return;
+      }
       if (formData.id) {
         this.atrService.updateAttribute(formData);
       } else {
@@ -123,8 +151,14 @@ export class FormComponent {
   }
 
   loadAttributeOptions() {
-    this.atrService.getAllAttributes().subscribe(data => {
+    this.atrService.getAllAttributes().subscribe((data: Attribute[]) => {
       this.attributeOptions = data;
+    })
+  }
+
+  loadEmployees(){
+    this.empService.getAllEmployees().subscribe((data: Employee[])=> {
+      this.employees = data;
     })
   }
 

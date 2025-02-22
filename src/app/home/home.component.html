@@ -1,4 +1,16 @@
 <div class="d-flex justify-content-center h-100">
+    <div class="gif" *ngIf="showGif">
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcm05ZnExOXZuMTVuYWgyNzhoMWpiejdpazY0cHZyYzdoejJoYTJvbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rDeYzCwoZlvclPUhf9/giphy.gif" 
+            alt="Animated GIF" />
+    </div>
+    <div class="welcomeMsgContainer">
+        <div class="title">Welcome CITE to my project</div>
+        <div class="content">
+            Im George Semaniakou, nice to meet you!! <br>
+            Hope you enjoy my work.
+
+        </div>
+    </div>
     <app-employees class="col-4"></app-employees>
     <app-attributes class="col-4"></app-attributes>
     <app-map class="col-4"></app-map>

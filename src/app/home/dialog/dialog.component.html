@@ -1,8 +1,29 @@
-<h2 mat-dialog-title>Confirmation</h2>
+<!-- <h2 mat-dialog-title>Confirmation</h2>
 <mat-dialog-content>
-  <p>Are you sure you want to delete it?</p>
+  <p>{{data.message}}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">No</button>
   <button mat-button color="primary" (click)="onYesClick()">Yes</button>
+</mat-dialog-actions> -->
+
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <p>{{data.message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <ng-container *ngIf="data.singleButton">
+    <button mat-button (click)="onOkClick()">
+      {{ data.confirmButtonText || 'OK' }}
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="!data.singleButton">
+    <button mat-button (click)="onNoClick()">
+      {{ data.cancelButtonText || 'No' }}
+    </button>
+    <button mat-button (click)="onYesClick()">
+      {{ data.confirmButtonText || 'Yes' }}
+    </button>
+  </ng-container>
 </mat-dialog-actions>
