@@ -123,6 +123,7 @@
                     background-color: black;
                 }
             }.cardItem:hover{
+                color: white;
                 background-color: rgb(197, 184, 184);
             }
         }
